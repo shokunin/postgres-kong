@@ -8,6 +8,12 @@ resource "docker_image" "kong" {
   keep_locally = true
 }
 
+resource "docker_image" "redis" {
+  name         = "redis:latest"
+  keep_locally = true
+}
+
+
 resource "docker_container" "kong" {
   name  = "kong"
   image = "${docker_image.kong.latest}"
@@ -25,6 +31,7 @@ resource "docker_container" "kong" {
 
   links = [
     "${docker_container.postgres.name}",
+    "${docker_container.redis.name}",
   ]
 
   env = [
@@ -53,6 +60,21 @@ resource "docker_container" "postgres" {
   volumes {
     container_path = "/postgres_data"
     host_path      = "${path.module}/postgres_data"
+  }
+}
+
+
+resource "docker_container" "redis" {
+  name    = "redis"
+  image   = "${docker_image.redis.latest}"
+  command = [ 
+              "redis-server",
+              "--port",
+              "${var.redis_port}"
+              ]
+  ports {
+    internal = "${var.redis_port}"
+    external = "${var.redis_port}"
   }
 }
 
