@@ -18,6 +18,8 @@ resource "docker_container" "kong" {
   name  = "kong"
   image = "${docker_image.kong.latest}"
 
+  depends_on  = ["null_resource.wait_for_startup"]
+
   ports {
     internal = 8000
     external = 8000
@@ -76,5 +78,12 @@ resource "docker_container" "redis" {
     internal = "${var.redis_port}"
     external = "${var.redis_port}"
   }
+}
+
+resource "null_resource" "wait_for_startup" {
+  depends_on = ["docker_container.postgres", "docker_container.redis"]
+  provisioner "local-exec" {
+    command = "sleep 10"
+  } 
 }
 
