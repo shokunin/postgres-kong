@@ -21,7 +21,7 @@ curl -X POST http://localhost:8001/apis/example-api/plugins \
     --data "config.second=1" \
     --data "config.minute=10" \
     --data "config.limit_by=consumer" \
-    --data "config.policy=cluster" \
+    --data "config.policy=redis" \
     --data "config.redis_host=redis" \
     --data "config.redis_port=6380" 
 
