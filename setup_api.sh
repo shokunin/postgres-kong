@@ -8,7 +8,7 @@ curl -i -X POST \
 
 curl -X POST http://localhost:8001/apis/example-api/plugins \
    --data "name=key-auth" \
-   --data "config.hide_credentials=true"
+   --data "config.hide_credentials=false"
 
 curl -X POST http://localhost:8001/consumers/ \
    --data "username=customera" \
