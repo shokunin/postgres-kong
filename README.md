@@ -22,6 +22,6 @@ tfenv install `cat .terraform-version`
 ```
 terraform plan
 terraform apply -var myip=<IP_ADDRESS_OF_YOUR_LAPTOP>
-./setup.sh
+./setup_api.sh
 ```
 
